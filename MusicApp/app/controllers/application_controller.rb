@@ -8,9 +8,16 @@ class ApplicationController < ActionController::Base
     !!curent_user
   end
 
-  def log_in_user(user)
+  def log_in_user!(user)
     user.reset_sesson_token!
     session[:session_token] = user.session_token
   end
+
+  protected
+
+  def user_params
+    params.require(:user).permit(:email, :password)
+  end
+
 
 end
